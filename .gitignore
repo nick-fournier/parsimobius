@@ -1,3 +1,6 @@
+# Parsimobius
+cache/*
+
 # Django #
 *.log
 *.pot
