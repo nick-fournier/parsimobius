@@ -1,6 +1,7 @@
 # Parsimobius
 cache/*
-
+data_io/cache/*
+*.ipnyb
 # Django #
 *.log
 *.pot
