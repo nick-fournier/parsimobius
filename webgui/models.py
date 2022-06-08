@@ -4,6 +4,9 @@ from django.db import models
 class OD(models.Model):
     w_geocode = models.CharField(max_length=15)
     h_geocode = models.CharField(max_length=15)
+    # year = models.IntegerField()
+    createdate = models.CharField(max_length=8)
+    state = models.CharField(max_length=2)
     S000 = models.IntegerField()
     SA01 = models.IntegerField()
     SA02 = models.IntegerField()
@@ -14,13 +17,16 @@ class OD(models.Model):
     SI01 = models.IntegerField()
     SI02 = models.IntegerField()
     SI03 = models.IntegerField()
-    year = models.IntegerField()
-    createdate = models.CharField(max_length=8, null=True, default=None)
-    table_name = models.CharField(max_length=32)
+    # table_name = models.CharField(max_length=32)
 
+    class Meta:
+        abstract = True
 
 class RAC(models.Model):
     h_geocode = models.CharField(max_length=15)
+    # year = models.IntegerField()
+    createdate = models.CharField(max_length=8)
+    state = models.CharField(max_length=2)
     C000 = models.IntegerField()
     CA01 = models.IntegerField()
     CA02 = models.IntegerField()
@@ -62,13 +68,17 @@ class RAC(models.Model):
     CD04 = models.IntegerField()
     CS01 = models.IntegerField()
     CS02 = models.IntegerField()
-    year = models.IntegerField()
-    createdate = models.CharField(max_length=8, null=True, default=None)
-    table_name = models.CharField(max_length=32)
+    # table_name = models.CharField(max_length=32)
+
+    class Meta:
+        abstract = True
 
 
 class WAC(models.Model):
     w_geocode = models.CharField(max_length=15)
+    # year = models.IntegerField()
+    createdate = models.CharField(max_length=8)
+    state = models.CharField(max_length=2)
     C000 = models.IntegerField()
     CA01 = models.IntegerField()
     CA02 = models.IntegerField()
@@ -120,6 +130,19 @@ class WAC(models.Model):
     CFS03 = models.IntegerField()
     CFS04 = models.IntegerField()
     CFS05 = models.IntegerField()
-    year = models.IntegerField()
-    createdate = models.CharField(max_length=8, null=True, default=None)
-    table_name = models.CharField(max_length=32)
+    # table_name = models.CharField(max_length=32)
+
+    class Meta:
+        abstract = True
+
+class OD_MAIN_JT00_2019(OD):
+    pass
+
+class OD_AUX_JT00_2019(OD):
+    pass
+
+class WAC_S000_JT00_2019(WAC):
+    pass
+
+class RAC_S000_JT00_2019(RAC):
+    pass
