@@ -1,4 +1,25 @@
-from django.db import models
+from django.contrib.gis.db import models
+
+
+class Geo(models.Model):
+    STATEFP = models.CharField(max_length=2)
+    COUNTYFP = models.CharField(max_length=3)
+    TRACTCE = models.CharField(max_length=6)
+    BLKGRPCE = models.CharField(max_length=1)
+    GEOID = models.CharField(max_length=12)
+    NAMELSAD = models.CharField(max_length=13)
+    MTFCC = models.CharField(max_length=5)
+    FUNCSTAT = models.CharField(max_length=1)
+    ALAND = models.IntegerField()
+    AWATER = models.IntegerField()
+    # INTPTLAT = models.CharField(max_length=12)
+    # INTPTLON = models.CharField(max_length=12)
+    INTPTLAT = models.FloatField()
+    INTPTLON = models.FloatField()
+    geometry = models.MultiPolygonField()
+
+    class Meta:
+        abstract = True
 
 
 class OD(models.Model):
@@ -21,6 +42,7 @@ class OD(models.Model):
 
     class Meta:
         abstract = True
+
 
 class RAC(models.Model):
     h_geocode = models.CharField(max_length=15)
@@ -135,14 +157,30 @@ class WAC(models.Model):
     class Meta:
         abstract = True
 
+
+class GeoBlocks(Geo):
+    pass
+
+
+class GeoBG(Geo):
+    pass
+
+
+class GeoTracts(Geo):
+    pass
+
+
 class OD_MAIN_JT00_2019(OD):
     pass
+
 
 class OD_AUX_JT00_2019(OD):
     pass
 
+
 class WAC_S000_JT00_2019(WAC):
     pass
+
 
 class RAC_S000_JT00_2019(RAC):
     pass

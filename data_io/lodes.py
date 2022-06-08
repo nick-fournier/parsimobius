@@ -4,6 +4,7 @@ from lodes_star.state_codes import State
 
 
 def store_lodes(lodes_dict):
+    #TODO place fetch in the loop, check if state has been stored, if not download it.
     for filename, df in lodes_dict.items():
         keys = filename.split('_')
         table_name = '_'.join(keys[1:5]).upper()
