@@ -3,23 +3,15 @@ from lodes_star.fetch import fetch_lodes
 from lodes_star.state_codes import State
 
 
-def store_lodes(lodes_dict):
+def store_lodes(df_dict):
     #TODO place fetch in the loop, check if state has been stored, if not download it.
-    for filename, df in lodes_dict.items():
+    for filename, df in df_dict.items():
         keys = filename.split('_')
         table_name = '_'.join(keys[1:5]).upper()
-
+        df['state'] = keys[0]
         if globals()[table_name].objects.filter(state=keys[0]).count() == 0:
             print('Storing ' + filename + ' in ' + table_name)
-            objs = [
-                globals()[table_name](
-                    **{
-                        **row.to_dict(),
-                        **{'state': keys[0]}
-                    }
-                )
-                for index, row in df.iterrows()
-            ]
+            objs = [globals()[table_name](**row.to_dict()) for index, row in df.iterrows()]
             globals()[table_name].objects.bulk_create(objs)
         else:
             print('Skipping ' + table_name + '. Already contains data!')
