@@ -2,9 +2,11 @@ from webgui.models import *
 from lodes_star.fetch import fetch_geo
 from lodes_star.state_codes import Geographies, State
 from django.contrib.gis.gdal import DataSource
-from django.contrib.gis.geos import GEOSGeometry
+from django.contrib.gis.geos import GEOSGeometry, Point
 from shapely.geometry.multipolygon import MultiPolygon
 from shapely.geometry.polygon import Polygon
+
+Point(954158.1, 4215137.1, srid=4326)
 
 
 def store_geo(df_dict):
@@ -16,8 +18,9 @@ def store_geo(df_dict):
         # Convert Polygon to MultiPolygon. DB is strict about only one or other.
         gdf["geometry"] = [MultiPolygon([feature]) if isinstance(feature, Polygon) else feature for feature in gdf["geometry"]]
 
-        # Convert to SQL friendly Polygon format
+        # Convert to SQL friendly Polygon/Point format
         gdf['geometry'] = [GEOSGeometry(str(g)) for g in gdf.geometry]
+        gdf['centroid'] = [Point(xy.INTPTLON, xy.INTPTLAT, srid=4326) for xy in gdf.itertuples()]
 
         if globals()[table_name].objects.filter(STATEFP=gdf.STATEFP[0]).count() == 0:
             print('Storing ' + table_name)
