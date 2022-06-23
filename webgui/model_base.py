@@ -13,6 +13,7 @@ class Geo(models.Model):
     INTPTLAT = models.FloatField()
     INTPTLON = models.FloatField()
     geometry = models.MultiPolygonField()
+    centroid = models.PointField(null=True)
 
     class Meta:
         abstract = True
