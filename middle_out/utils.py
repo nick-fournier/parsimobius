@@ -4,9 +4,14 @@ from geopy.geocoders import Nominatim
 from django.contrib.gis.gdal import Envelope
 from django.contrib.gis.geos import Point
 import pandas as pd
+import osmnx as ox
+
 
 
 def create_extent(location, distance):
+    """
+    Creates a bounding envelope based on a location and some distance.
+    """
     geolocator = Nominatim(user_agent="Parsimobius")
     if isinstance(location, str):
         location = geolocator.geocode(location)
@@ -15,7 +20,16 @@ def create_extent(location, distance):
     pythag_dist = (distance**2 + distance**2)**0.5
     bounds = [inverse_haversine(coord, pythag_dist, Direction[x], unit=Unit.MILES) for x in ['SOUTHWEST', 'NORTHEAST']]
     bounds = Envelope([j for i in bounds for j in i])
+
     return bounds
+
+def query_extent(extent, DBName):
+    DB = globals()[DBName]
+    return DB.objects.filter(centroid__within=extent.wkt)
+
+
+def query_network():
+
 
 
 if __name__ == "__main__":
