@@ -1,6 +1,22 @@
 from django.contrib.gis.db import models
 
 
+ODkeys = {
+    'w_geocode': 'Workplace Census Block Code',
+    'h_geocode': 'Residence Census Block Code',
+    'S000': 'Total number of jobs',
+    'SA01': 'Number of jobs of workers age 29 or younger',
+    'SA02': 'Number of jobs for workers age 30 to 54',
+    'SA03': 'Number of jobs for workers age 55 or older',
+    'SE01': 'Number of jobs with earnings $1250/month or less',
+    'SE02': 'Number of jobs with earnings $1251/month to $3333/month',
+    'SE03': 'Number of jobs with earnings greater than $3333/month',
+    'SI01': 'Number of jobs in Goods Producing industry sectors',
+    'SI02': 'Number of jobs in Trade, Transportation, and Utilities industry sectors',
+    'SI03': 'Number of jobs in All Other Services industry sectors',
+    'createdate': 'Date on which data was created, formatted as YYYYMMDD'
+}
+
 class Geo(models.Model):
     STATEFP = models.CharField(max_length=2)
     COUNTYFP = models.CharField(max_length=3)

@@ -40,10 +40,17 @@ ABM - Activity Based Model
 
 """
 
-
+from data_io.query import query_extent
 
 def rbf_lodes():
-    pass
+
+    queryset = query_extent(location='Boston', buffer=10, year=2019)
+
+    # Geo centroids
+    gpd.GeoDataFrame(geo_queryset).centroid
+
+    # Merge centroids to OD
+    gpd.GeoDataFrame(od_queryset)
 
 def k_shortest():
     """
